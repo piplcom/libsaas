@@ -12,6 +12,7 @@ class HTTPError(Exception):
     """
     A non-2xx code has been returned.
     """
+
     def __init__(self, body, code, headers):
         self.body = body
         self.code = code
@@ -27,7 +28,8 @@ class Request(object):
     """
     Everything that's needed to make a HTTP request.
     """
-    def __init__(self, method, uri, params=None, headers=None):
+
+    def __init__(self, method, uri, params=None, headers=None, async=False, parser=None, callback=None):
         """
         :var method: the HTTP method
         :vartype method: str using only ASCII characters
@@ -47,6 +49,10 @@ class Request(object):
         self.uri = uri
         self.params = params if params is not None else {}
         self.headers = headers if headers is not None else {}
+        self.async = async
+        self.retries = 1
+        self.callback = callback
+        self.parser = parser
 
     def __repr__(self):
         return "<Request [%s %s] at 0x%x>" % (self.method, self.uri,
@@ -126,21 +132,21 @@ def serialize_flatten_rec(prefix, value, array_indices):
         # all dict items and flatten the result
         return chain.from_iterable(
             (serialize_flatten_rec('{0}[{1}]'.format(
-                        port.to_u(prefix), port.to_u(key)),
-                                   val, array_indices)
+                port.to_u(prefix), port.to_u(key)),
+                val, array_indices)
              for key, val in value.items()))
     elif isinstance(value, list):
         # serializing a list, use prefix[] as the prefix, recurse for
         # all items and flatten the result
         return chain.from_iterable(
             (serialize_flatten_rec('{0}[{1}]'.format(
-                        port.to_u(prefix), i if array_indices else ''),
-                                   val, array_indices)
+                port.to_u(prefix), i if array_indices else ''),
+                val, array_indices)
              for i, val in enumerate(value)))
     elif isinstance(value, bool):
         # serializing a boolean, take the prefix as-is and serialize the value
         # to string
-        return ((port.to_u(prefix), 'true' if value else 'false'), )
+        return ((port.to_u(prefix), 'true' if value else 'false'),)
     else:
         # anything else, just use the prefix and value as-is
-        return ((port.to_u(prefix), port.to_u(value)), )
+        return ((port.to_u(prefix), port.to_u(value)),)

@@ -1,3 +1,8 @@
+Fork by Pipl to provide:
+ * multi-thread processing of request queue
+ * retries support
+ * 429 Throttle Reach
+
 This is libsaas, a library to take the pain out of using SaaS APIs.
 
 It provides an abstraction layer on top of various APIs, taking care of
