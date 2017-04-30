@@ -33,7 +33,6 @@ def requests_executor(request, parser):
         'method': request.method,
         'url': request.uri,
         'headers': request.headers,
-        'extra': {},
     }
 
     if request.params:
