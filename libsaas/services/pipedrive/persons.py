@@ -35,7 +35,7 @@ class Persons(PersonsResource):
         return request, parsers.parse_json
 
     @base.apimethod
-    def find(self, term, org_id=None, start=None, limit=None):
+    def find(self, term, org_id=None, start=None, limit=None, search_by_email=False):
         """
         Searches all persons by their name.
 
