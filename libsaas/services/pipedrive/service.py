@@ -343,7 +343,7 @@ class Pipedrive(base.Resource):
 
     @base.apimethod
     def search_by_field(self, term, field_type, field_key, exact_match=0,
-                        return_field_key=None, return_items_ids=1, start=None, limit=None):
+                        return_field_key=None, return_item_ids=1, start=None, limit=None):
         """
         Preform a search
         """
