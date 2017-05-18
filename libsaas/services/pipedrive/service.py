@@ -330,7 +330,7 @@ class Pipedrive(base.Resource):
         return products.Products(self)
 
     @base.apimethod
-    def search(self, term, start=None, limit=None):
+    def search(self, term, item_type=None, start=None, limit=None):
         """
         Performs a search across the account and returns SearchResults.
 
