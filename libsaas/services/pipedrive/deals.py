@@ -3,7 +3,6 @@ from libsaas.services import base
 
 
 class Products(base.RESTResource):
-
     path = 'products'
 
     @base.apimethod
@@ -34,12 +33,10 @@ class Products(base.RESTResource):
 
 
 class DealsResource(base.RESTResource):
-
     path = 'deals'
 
 
 class Deals(DealsResource):
-
     @base.apimethod
     def get(self, filter_id=None, start=None, limit=None, sort_by=None,
             sort_mode=None, owned_by_you=None):
@@ -97,6 +94,17 @@ class Deals(DealsResource):
 
 
 class Deal(DealsResource):
+    @base.apimethod
+    def merge(self, merge_with_id):
+        """
+        Merges a person with another person.
+
+        Upstream documentation:
+        https://developers.pipedrive.com/v1#methods-Persons
+        """
+        params = base.get_params(None, locals())
+        url = '{0}/merge'.format(self.get_url())
+        return http.Request('POST', url, params), parsers.parse_json
 
     @base.apimethod
     def activities(self, start=None, limit=None, done=None, exclude=None):
@@ -166,7 +174,6 @@ class Deal(DealsResource):
 
 
 class DealFieldsResource(base.RESTResource):
-
     path = 'dealFields'
 
     def update(self, *args, **kwargs):
@@ -174,7 +181,6 @@ class DealFieldsResource(base.RESTResource):
 
 
 class DealFields(DealFieldsResource):
-
     @base.apimethod
     def delete(self, ids):
         """
