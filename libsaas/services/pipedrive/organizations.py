@@ -110,7 +110,7 @@ class Organization(OrganizationsResource):
         return http.Request('GET', url, params), parsers.parse_json
 
     @base.apimethod
-    def deals(self, start=None, limit=None):
+    def deals(self, start=None, limit=None, status=None, sort='id'):
         """
         Lists deals associated with an organization.
 
