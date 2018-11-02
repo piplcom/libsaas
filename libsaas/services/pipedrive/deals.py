@@ -38,7 +38,7 @@ class DealsResource(base.RESTResource):
 
 class Deals(DealsResource):
     @base.apimethod
-    def get(self, filter_id=None, start=None, limit=None, sort_by=None,
+    def get(self, user_id=None, filter_id=None, start=None, limit=None, sort_by=None,
             sort_mode=None, owned_by_you=None):
         """
         Returns all deals
