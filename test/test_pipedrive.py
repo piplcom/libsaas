@@ -165,8 +165,10 @@ class PipedriveTestCase(unittest.TestCase):
 
     def test_files(self):
 
-        self.service.files().create('file_mock', deal_id=1)
+        f = open('1.txt', 'r')
+        req = self.service.files().create(f, deal_id=1)
         self.expect('POST', '/files', {'deal_id': 1})
+        f.close()
 
         file = {'name': 'test'}
         paging = {'start': 100, 'limit': 50}

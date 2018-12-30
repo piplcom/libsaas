@@ -1,3 +1,4 @@
+import json
 import logging
 from time import sleep
 
@@ -41,6 +42,8 @@ def requests_executor(request, parser):
             kwargs['params'] = request.params
         else:
             kwargs['data'] = request.params
+            if request.files:
+                kwargs['data'] = json.loads(request.params)
 
     resp = requests.request(**kwargs)
 
