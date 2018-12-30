@@ -6,8 +6,14 @@ class FilesResource(base.RESTResource):
 
     path = 'files'
 
-    def create(self, *args, **kwargs):
-        raise base.MethodNotSupported()
+    @base.apimethod
+    def create(self, file, user_id=None, deal_id=None, person_id=None, org_id=None):
+        params = base.get_params(None, locals())
+        params.pop('file', None)
+
+        return http.Request('POST', self.get_url(), params, files={
+            file: file
+        }), parsers.parse_json
 
 
 class Files(FilesResource):

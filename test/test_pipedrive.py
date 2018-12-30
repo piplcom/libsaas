@@ -164,8 +164,9 @@ class PipedriveTestCase(unittest.TestCase):
         self.expect('POST', '/deals/1/products', p)
 
     def test_files(self):
-        with port.assertRaises(MethodNotSupported):
-            self.service.files().create()
+
+        self.service.files().create('file_mock', deal_id=1)
+        self.expect('POST', '/files', {'deal_id': 1})
 
         file = {'name': 'test'}
         paging = {'start': 100, 'limit': 50}

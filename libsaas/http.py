@@ -29,7 +29,7 @@ class Request(object):
     Everything that's needed to make a HTTP request.
     """
 
-    def __init__(self, method, uri, params=None, headers=None, async=False, parser=None, callback=None):
+    def __init__(self, method, uri, params=None, headers=None, async=False, parser=None, callback=None, files=None):
         """
         :var method: the HTTP method
         :vartype method: str using only ASCII characters
@@ -53,6 +53,7 @@ class Request(object):
         self.retries = 1
         self.callback = callback
         self.parser = parser
+        self.files = files
 
     def __repr__(self):
         return "<Request [%s %s] at 0x%x>" % (self.method, self.uri,
