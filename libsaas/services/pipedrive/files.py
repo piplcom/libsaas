@@ -12,7 +12,7 @@ class FilesResource(base.RESTResource):
         params.pop('file', None)
 
         return http.Request('POST', self.get_url(), params, files={
-            file: file
+            "file": file
         }), parsers.parse_json
 
 
