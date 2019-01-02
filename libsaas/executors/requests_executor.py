@@ -44,6 +44,7 @@ def requests_executor(request, parser):
             kwargs['data'] = request.params
             if request.files:
                 kwargs['data'] = json.loads(request.params)
+                kwargs.pop('headers', None)
 
     resp = requests.request(**kwargs)
 
