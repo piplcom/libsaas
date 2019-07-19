@@ -2,7 +2,7 @@ import json
 import unittest
 
 from libsaas import http, port
-from libsaas.executors import test_executor, requests_executor
+from libsaas.executors import test_executor
 from libsaas.services import pipedrive
 from libsaas.services.base import MethodNotSupported
 
@@ -10,8 +10,8 @@ from libsaas.services.base import MethodNotSupported
 class PipedriveTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.executor = requests_executor.use()
-#        self.executor.set_response(b'{}', 200, {})
+        self.executor = test_executor.use()
+        self.executor.set_response(b'{}', 200, {})
 
         self.service = pipedrive.Pipedrive('my-api-token')
 
