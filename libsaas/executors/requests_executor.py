@@ -18,7 +18,7 @@ logger = logging.getLogger('libsaas.executor.requests_executor')
 
 URLENCODE_METHODS = ('GET', 'HEAD', 'OPTIONS')
 
-RETRIES_NUMBER = 5
+RETRIES_NUMBER = 3
 
 
 def requests_executor(request, parser):
@@ -46,26 +46,7 @@ def requests_executor(request, parser):
                 kwargs['data'] = json.loads(request.params)
                 kwargs.pop('headers', None)
 
-    resp = None
-
-    try:
-        resp = requests.request(**kwargs)
-    except Exception:
-        if request.retries == RETRIES_NUMBER:
-            logger.exception("Error communicating with %s", request.uri)
-
-            if resp:
-                resp.raise_for_status()
-                raise
-            else:
-                raise
-
-        request.retries += 1
-        # Pipedrive API is so shitting it sometimes not working at all,
-        # We want to Wait one second and continue
-        sleep(1)
-
-        return requests_executor(request, parser)
+    resp = requests.request(**kwargs)
 
     # Throttle Limit Reached.
     if resp.status_code == 429:
