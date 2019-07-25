@@ -52,8 +52,7 @@ def requests_executor(request, parser):
     if resp.status_code == 429:
         sec_to_wait = int(resp.headers.get('Retry-After', 0))
         logger.debug(u'Throttle Reached, sleeping for %d', sec_to_wait)
-
-        sleep(sec_to_wait)
+        sleep(sec_to_wait or 0.1)
 
         # Retrying the same request again.
         return requests_executor(request, parser)
