@@ -46,7 +46,15 @@ def requests_executor(request, parser):
                 kwargs['data'] = json.loads(request.params)
                 kwargs.pop('headers', None)
 
-    resp = requests.request(**kwargs)
+    try:
+        resp = requests.request(**kwargs)
+    except:
+        if request.retries > RETRIES_NUMBER:
+            log.exception("Error processing request %s all retries failed", kwargs.get('url'))
+            raise
+
+        request.retries += 1
+        return requests_executor(request, parser)
 
     # Throttle Limit Reached.
     if resp.status_code == 429:
