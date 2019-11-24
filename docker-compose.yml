@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  test:
+    restart: on-failure
+    image: piplsearch/libsaas:development
+    build:
+      context: .
+    working_dir: /libsaas
+    command: bash -c "pip install . && python test.py"
+    volumes:
+      - .:/libsaas
+    env_file:
+      - .env
+    networks:
+      - apps_network
+
+networks:
+  apps_network:
+    external: true

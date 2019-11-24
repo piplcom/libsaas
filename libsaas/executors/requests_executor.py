@@ -50,7 +50,7 @@ def requests_executor(request, parser):
         resp = requests.request(**kwargs)
     except:
         if request.retries > RETRIES_NUMBER:
-            log.exception(
+            logger.exception(
                 "Error processing request %s all retries failed", kwargs.get("url")
             )
             raise
@@ -71,7 +71,7 @@ def requests_executor(request, parser):
             resp.raise_for_status()
     except:
         if request.retries > RETRIES_NUMBER:
-            log.exception(
+            logger.exception(
                 "Error processing request %s all retries failed", kwargs.get("url")
             )
             raise
