@@ -242,12 +242,12 @@ class HubSpot(base.Resource):
         """
         return companies.Companies(self)
 
-    @base.resource(contacts.Contacts)
-    def contact(self, contact_id):
+    @base.resource(contacts.Contact)
+    def contact(self, email):
         """
         Return the resource corresponding to all persons
         """
-        return contacts.Contact(self, contact_id)
+        return contacts.Contact(self, email)
 
     @base.resource(contacts.Contacts)
     def contacts(self):

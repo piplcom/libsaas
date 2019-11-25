@@ -210,6 +210,9 @@ class HierarchicalResource(Resource):
         if self.object_id:
             self.object_id = http.quote_any(self.object_id)
 
+    def get_base_url(self):
+        return '{0}/{1}'.format(self.parent.get_url(), self.path)
+
     def get_url(self):
         if self.object_id is None:
             return '{0}/{1}'.format(self.parent.get_url(), self.path)

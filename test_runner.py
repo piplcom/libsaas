@@ -19,16 +19,15 @@ class IntegrationHubSpotTestCase(unittest.TestCase):
 
     def test_companies_contacts(self):
         resp = self.service_tester.company(2561669982).contacts()
-        self.assertTrue(resp.get('contacts'))
+        self.assertTrue(resp.get("contacts"))
 
     def test_company_domain(self):
-        resp = self.service_tester.companies_domain('pipl.com').get()
-        self.assertTrue(resp.get('results'))
+        resp = self.service_tester.companies_domain("pipl.com").get()
+        self.assertTrue(resp.get("results"))
 
     def test_companies_list(self):
         resp = self.service_tester.companies().get()
-        self.assertTrue(resp.get('companies'))
-
+        self.assertTrue(resp.get("companies"))
 
 
 class ContactIntegrationHubSpotTestCase(unittest.TestCase):
@@ -37,21 +36,14 @@ class ContactIntegrationHubSpotTestCase(unittest.TestCase):
         self.service_tester = hubspot.HubSpot("f14082f2-e410-4f0d-955d-d39b2c7cfc7f")
 
     def test_contact(self):
-        resp = self.service_tester.contact(201).get()
-        self.assertEqual(resp.get("contactId"), 201)
+        resp = self.service_tester.contact("tom.raz+vettingbug@pipl.com").get()
+        self.assertEqual(resp.get("vid"), 201)
 
     def test_contact_update(self):
-        resp = self.service_tester.company(2561669982).update({"name": "test"})
+        resp = self.service_tester.contact("tom.raz+vettingbug@pipl.com").update(
+            {"properties": [{"property": "firstname", "value": "test"}]}
+        )
         self.assertTrue(resp)
 
-    def test_contact_contacts(self):
-        resp = self.service_tester.company(2561669982).contacts()
-        self.assertTrue(resp.get('contacts'))
-
-    def test_company_domain(self):
-        resp = self.service_tester.companies_domain('pipl.com').get()
-        self.assertTrue(resp.get('results'))
-
-    def test_contacts_list(self):
-        resp = self.service_tester.companies().get()
-        self.assertTrue(resp.get('companies'))
+        resp = self.service_tester.contact("tom.raz+vettingbug@pipl.com").get()
+        self.assertEqual(resp.get("vid"), 201)

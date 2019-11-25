@@ -33,7 +33,7 @@ class Contacts(ContactsResource):
 
 
 class ContactsResource(base.RESTResource):
-    path = "contacts/v1/contact"
+    path = "contacts/v1/contact/email"
 
 
 class Contact(ContactsResource):
@@ -45,19 +45,23 @@ class Contact(ContactsResource):
         Upstream documentation:
         https://developers.hubspot.com/docs/methods/contacts/get_contacts
         """
-        url = "{0}/{1}/vid/{2}/profile".format(
-            self.parent.get_url(), self.path, self.object_id
-        )
+        url = "{0}/profile".format(self.get_url())
 
         return http.Request("GET", url), parsers.parse_json
+
+
 
     @base.apimethod
-    def find(self, email):
+    def update(self, obj):
         """
-        Searches all Contacts by their name.
+        Update this resource.
 
-        Upstream documentation:
-        https://developers.pipedrive.com/v1#methods-Contacts
+        :var obj: a Python object representing the updated resource, usually in
+            the same format as returned from `get`. Refer to the upstream
+            documentation for details.
         """
+        self.require_item()
         url = "{0}/profile".format(self.get_url())
-        return http.Request("GET", url), parsers.parse_json
+        request = http.Request('POST', url, self.wrap_object(obj))
+
+        return request, parsers.parse_empty_truely

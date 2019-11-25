@@ -22,3 +22,10 @@ def parse_json(body, code, headers):
 def parse_empty(body, code, headers):
     if not 200 <= code < 300:
         raise http.HTTPError(body, code, headers)
+
+
+def parse_empty_truely(body, code, headers):
+    if not 200 <= code < 300:
+        raise http.HTTPError(body, code, headers)
+
+    return True
