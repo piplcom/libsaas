@@ -29,7 +29,7 @@ class Request(object):
     Everything that's needed to make a HTTP request.
     """
 
-    def __init__(self, method, uri, params=None, headers=None, async=False, parser=None, callback=None, files=None):
+    def __init__(self, method, uri, params=None, headers=None, is_async=False, parser=None, callback=None, files=None):
         """
         :var method: the HTTP method
         :vartype method: str using only ASCII characters
@@ -49,7 +49,7 @@ class Request(object):
         self.uri = uri
         self.params = params if params is not None else {}
         self.headers = headers if headers is not None else {}
-        self.async = async
+        self.is_async = is_async
         self.retries = 1
         self.callback = callback
         self.parser = parser
